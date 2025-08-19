@@ -11,6 +11,10 @@ export const resolvers = {
     ...blogModule.Mutation,
     ...messageModule.Mutation,
   },
+  Subscription :{
+    ...messageModule.Subscription,
+    ...blogModule.Subscription
+  },
    User: {
     posts: (parent) => {
       return posts.filter(post => post.authorId === parent.id);
@@ -29,6 +33,7 @@ export const resolvers = {
     user: (parent) => users.find(user => user.id === parent.userId),
     post: (parent) => posts.find(post => post.id === parent.postId),
   },
+  
    UserResult: {
     __resolveType(obj) {
       if (obj.code) return "Error";

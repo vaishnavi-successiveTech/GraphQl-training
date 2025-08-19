@@ -31,6 +31,12 @@ type Mutation {
     deleteComment(id:ID!):Comment
 }
 
+type Subscription {
+  messagePosted:Message!
+  commentPosted:Comment!
+}
+
+
 input CommentInput {
   id: ID!
   content: String!
@@ -44,5 +50,3 @@ input PostInput {
   content: String!
   authorId: ID!
 }
-
-

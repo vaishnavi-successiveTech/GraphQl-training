@@ -25,7 +25,7 @@ export const blogMutation = {
 
     const newComment = {
       id: String(comments.length + 1),
-       content,   // ✅ fixed to match schema
+      content,  
       userId: authorId,
       postId,
     };

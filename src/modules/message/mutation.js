@@ -1,15 +1,19 @@
 import { messages } from "./dataSource.js";
 
 export const messageMutationResolvers = {
-  postMessage: (_, { content, author }) => { // parent,argument
+  postMessage: (_, { content, author, title }, { pubsub }) => {
+    // parent,argument
     const newMessage = {
       id: String(messages.length + 1),
       content,
       author,
       createdAt: new Date().toISOString(),
-      // title: String(messages.length + 1),
+      title: title,
     };
     messages.push(newMessage);
+    pubsub.publish("MESSAGE_POSTED", {
+      messagePosted: newMessage,
+    });
     return newMessage;
   },
 };
