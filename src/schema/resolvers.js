@@ -29,4 +29,22 @@ export const resolvers = {
     user: (parent) => users.find(user => user.id === parent.userId),
     post: (parent) => posts.find(post => post.id === parent.postId),
   },
+   UserResult: {
+    __resolveType(obj) {
+      if (obj.code) return "Error";
+      return "User";
+    }
+  },
+  PostResult: {
+    __resolveType(obj) {
+      if (obj.code) return "Error";
+      return "Post";
+    }
+  },
+  CommentResult: {
+    __resolveType(obj) {
+      if (obj.code) return "Error";
+      return "Comment";
+    }
+  }
 };
