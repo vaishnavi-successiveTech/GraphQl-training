@@ -7,7 +7,6 @@
 # }
 
 type Query {
-     messageHistory(userId: ID!): [Chat!]!#3 assignment
   messages: [Message!]!
   getUsers: [User!]!
   senders:[Sender!]! #3 assignment
@@ -24,7 +23,7 @@ type Query {
   getPost(id: ID!): PostResult
   getComment(id: ID!): CommentResult
    paginatedPosts(page: Int!, limit: Int!,sortBy:String,order:String): PaginatedPosts
-   chatHistory:[Chat!]!
+   chatHistory:[Chat!]! #3 assignment
 }
 
 type Mutation {
