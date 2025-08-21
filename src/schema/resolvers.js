@@ -2,7 +2,7 @@ import { comments, posts, users } from '../modules/blog/dataSource.js';
 import { blogModule } from '../modules/blog/index.js';
 import { senders } from '../modules/chat/dataSource.js';
 import { chatModule } from '../modules/chat/index.js';
-import { nestedChatResolvers } from '../modules/chat/nestedChatResolver.js';
+
 import { chatQueryResolvers } from '../modules/chat/query.js';
 import { messageModule } from '../modules/message/index.js';
 
@@ -22,7 +22,7 @@ export const resolvers = {
     ...blogModule.Subscription,
     ...chatModule.Subscription
   },
-  ...nestedChatResolvers,
+
    User: {
     posts: (parent) => {
       return posts.filter(post => post.authorId === parent.id);
@@ -49,7 +49,6 @@ export const resolvers = {
   }
 },
 
-  
 
   
    UserResult: {

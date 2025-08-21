@@ -11,11 +11,6 @@ export const chatQueryResolvers = {
     })),
 
     chatHistory:()=>allChat
-  // messageHistory: () =>
-  //   chats.map((c) => ({
-  //     ...c,
-  //     user: senders.find((u) => u.id === c.userId),
-  //   })),
 };
 
 // import { chats, senders } from "./dataSource.js";
