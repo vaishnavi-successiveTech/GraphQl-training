@@ -1,3 +1,4 @@
+import { allChat } from "../../config/serverConfig.js";
 import { chats, senders } from "./dataSource.js";
 
 export const chatQueryResolvers = {
@@ -6,14 +7,15 @@ export const chatQueryResolvers = {
   chats: () =>
     chats.map((msg) => ({
       ...msg,
-      user: senders.find((u) => u.id === msg.userId) || { id: "unknown", username: "unknown" },
+      user: senders.find((u) => u.id === msg.userId),
     })),
 
-  messageHistory: () =>
-    chats.map((c) => ({
-      ...c,
-      user: senders.find((u) => u.id === c.userId) || { id: "unknown", username: "unknown" },
-    })),
+    chatHistory:()=>allChat
+  // messageHistory: () =>
+  //   chats.map((c) => ({
+  //     ...c,
+  //     user: senders.find((u) => u.id === c.userId),
+  //   })),
 };
 
 // import { chats, senders } from "./dataSource.js";

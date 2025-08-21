@@ -4,11 +4,11 @@ import { connect } from "mongoose";
 import { createApolloServer } from "./src/server/express.js";
 import { connectDB } from "./src/config/db.js";
 
-const httpServer = await createApolloServer(4000);
+const httpServer = await createApolloServer(8001);
 // connectDB();
-httpServer.listen(4000, () => {
-  console.log(`🚀 Query/Mutation endpoint: http://localhost:4000/graphql`);
-  console.log(`🚀 Subscription endpoint: ws://localhost:4000/graphql`);
+httpServer.listen(8001, () => {
+  console.log(`🚀 Query/Mutation endpoint: http://localhost:8001/graphql`);
+  console.log(`🚀 Subscription endpoint: ws://localhost:8001/graphql`);
 });
 // import { ApolloServer } from "@apollo/server";
 // import { startStandaloneServer } from "@apollo/server/standalone";

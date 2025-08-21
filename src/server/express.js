@@ -46,7 +46,7 @@ export async function createExpressServer() {
          context: ({ req }) => {
       const token = req.headers.authorization || "";
       if(!token){
-        return {user:null};
+        return {user:null,pubsub};
       }
       console.log('my token is',token)
       const userExist = jwt.verify(token,"supersecret")

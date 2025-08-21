@@ -1,7 +1,7 @@
 type Chat {
   id: ID!
   text: String!
-  user: Sender
+  user: Sender!
 }
 
 type Sender {

@@ -7,7 +7,7 @@
 # }
 
 type Query {
-   messageHistory: [Chat!]! #3 assignment
+     messageHistory(userId: ID!): [Chat!]!#3 assignment
   messages: [Message!]!
   getUsers: [User!]!
   senders:[Sender!]! #3 assignment
@@ -24,6 +24,7 @@ type Query {
   getPost(id: ID!): PostResult
   getComment(id: ID!): CommentResult
    paginatedPosts(page: Int!, limit: Int!,sortBy:String,order:String): PaginatedPosts
+   chatHistory:[Chat!]!
 }
 
 type Mutation {
@@ -35,6 +36,7 @@ type Mutation {
     login(username:String! , password:String!):String!
     sendMessage(text:String!,userId:ID):Chat!
       logout: Boolean!   # new mutation
+      
     
 }
 

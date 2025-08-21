@@ -1,4 +1,4 @@
-import { pubsub } from "../../server/pubsub.js";
+import { allChat } from "../../config/serverConfig.js";
 import { chats, senders } from "./dataSource.js";
 import jwt from "jsonwebtoken";
 
@@ -10,6 +10,8 @@ login: (_, { username, password },{pubsub}) => {
   const user = senders.find(u => u.username === username && u.password === password);
   if (!user) throw new Error("Invalid credentials");
 
+ 
+
   const token = jwt.sign({ userId: user.id }, SECRET, { expiresIn: "1h" });
   // Mark user online
     onlineUsers.add(user.username);
@@ -20,20 +22,25 @@ login: (_, { username, password },{pubsub}) => {
 
   return token; // just the string
 },
-  sendMessage: (_, { text }, { userExist,pubsub }) => {
+  sendMessage: (_, { text ,userId}, { userExist,pubsub }) => {
     if (!userExist) throw new Error("Not authenticated");
-
+    
+    const decodedId=userExist.userId;
+    if(decodedId!==userId){
+      throw new Error("user not logged In");
+    }
+    console.log("decodeId",decodedId);
     const newMsg = {
       id: `m${chats.length + 1}`,
       text,
-      userId: userExist.id
+      userId
     };
     chats.push(newMsg);
+    allChat.push(newMsg);
 
-    const msgWithUser = { ...newMsg, user: senders.find(u => u.id === userExist.id) };
-    pubsub.publish("MESSAGE_ADDED", { messageAdded: msgWithUser });
-
-    return msgWithUser;
+    // const msgWithUser = { ...newMsg, user: senders.find(u => u.id === userExist.id) };
+    pubsub.publish("MESSAGE_ADDED", { messageAdded: newMsg });
+    return newMsg;
   },
 
   logout: (_, __, {userExist,pubsub}) => {
