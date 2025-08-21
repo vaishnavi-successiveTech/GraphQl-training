@@ -6,15 +6,18 @@ import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHt
 import { ApolloServerPluginLandingPageLocalDefault } from "@apollo/server/plugin/landingPage/default";
 import cors from "cors";
 import { makeExecutableSchema } from "@graphql-tools/schema";
+import jwt from "jsonwebtoken";
 
 import { WebSocketServer } from "ws";
 import { useServer } from "graphql-ws/use/ws";
 
-import { pubsub } from "./pubsub.js"; // Import the pubsub instance
+import { pubsub } from "./pubsub.js"; // Import pubsub instance
 
 import { typeDefs } from "../schema/typeDefs.js";
 import { resolvers } from "../schema/resolvers.js";
+import { userInfo } from "os";
 
+const SECRET = "supersecret";
 
 
 export async function createExpressServer() {
@@ -40,7 +43,17 @@ export async function createExpressServer() {
     cors(),
     express.json(),
     expressMiddleware(server, {
-      context: async () => ({ pubsub }),
+         context: ({ req }) => {
+      const token = req.headers.authorization || "";
+      if(!token){
+        return {user:null};
+      }
+      console.log('my token is',token)
+      const userExist = jwt.verify(token,"supersecret")
+      console.log("userExist",userExist)
+      return { pubsub,userExist };
+    },
+  
     })
   );
 
@@ -53,7 +66,7 @@ export async function createExpressServer() {
   useServer(
     {
       schema,
-      context: async () => ({ pubsub }), // 👈 inject pubsub in WS context
+      context: async () => ({ pubsub }), //  inject pubsub in WS context
     },
     wsServer
   );

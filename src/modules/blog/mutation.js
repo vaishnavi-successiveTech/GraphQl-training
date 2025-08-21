@@ -1,3 +1,4 @@
+import { pubsub } from '../../server/pubsub.js';
 import { comments, posts, users } from './dataSource.js';
 
 export const blogMutation = {
@@ -31,6 +32,9 @@ export const blogMutation = {
     };
 
     comments.push(newComment);
+    pubsub.publish("COMMENT_POSTED",{
+      commentPosted:newComment,
+    })
     return newComment;
   },
 

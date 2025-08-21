@@ -1,13 +1,8 @@
+import { simulateDelay } from "../../utils/simulater.js";
 import { posts, users, comments } from "./dataSource.js";
-
-// helper to simulate loading delay
-const simulateDelay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
 export const blogQueryResolvers = {
    getUsers: async () => {
     await simulateDelay(1000); 
-   
-
     return users;
   },
   //  getUsers: () => users,
@@ -72,7 +67,7 @@ export const blogQueryResolvers = {
 
   let sortedPosts = [...posts];
 
-  // ✅ Apply sorting if requested
+  // Apply sorting if requested
   if (sortBy) {
     sortedPosts.sort((a, b) => {
       let fieldA = a[sortBy];

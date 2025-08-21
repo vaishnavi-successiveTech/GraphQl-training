@@ -1,19 +1,25 @@
 import { comments, posts, users } from '../modules/blog/dataSource.js';
 import { blogModule } from '../modules/blog/index.js';
+import { senders } from '../modules/chat/dataSource.js';
+import { chatModule } from '../modules/chat/index.js';
+import { chatQueryResolvers } from '../modules/chat/query.js';
 import { messageModule } from '../modules/message/index.js';
 
 export const resolvers = {
   Query: {
     ...blogModule.Query,
     ...messageModule.Query,
+    ...chatModule.Query
   },
   Mutation: {
     ...blogModule.Mutation,
     ...messageModule.Mutation,
+    ...chatModule.Mutation
   },
   Subscription :{
     ...messageModule.Subscription,
-    ...blogModule.Subscription
+    ...blogModule.Subscription,
+    ...chatModule.Subscription
   },
    User: {
     posts: (parent) => {
@@ -33,6 +39,10 @@ export const resolvers = {
     user: (parent) => users.find(user => user.id === parent.userId),
     post: (parent) => posts.find(post => post.id === parent.postId),
   },
+  Chat: {
+  user: (parent) => senders.find(u => u.id === parent.userId) || { id: "unknown", username: "unknown" }
+},
+
   
    UserResult: {
     __resolveType(obj) {

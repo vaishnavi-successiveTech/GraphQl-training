@@ -7,8 +7,11 @@
 # }
 
 type Query {
-     messages: [Message!]!
-     getUsers: [User!]!
+   messageHistory: [Chat!]! #3 assignment
+  messages: [Message!]!
+  getUsers: [User!]!
+  senders:[Sender!]! #3 assignment
+  chats:[Chat!]!   #3 assignment
   getUserById(id: ID!): User
   getPosts: [Post!]!
   getPostById(id: ID!): Post
@@ -29,14 +32,21 @@ type Mutation {
     createComment(content: String!, authorId: ID!, postId: ID!): Comment!
     updateUser(id:ID!,name:String!):User
     deleteComment(id:ID!):Comment
+    login(username:String! , password:String!):String!
+    sendMessage(text:String!,userId:ID):Chat!
+      logout: Boolean!   # new mutation
+    
 }
+
 
 type Subscription {
-  messagePosted:Message!
-  commentPosted:Comment!
+  messagePosted: Message!
+  commentPosted: Comment!
+  userPresenceChanged: UserPresence!
+
+  # structured payload
+  messageAdded: Chat! 
 }
-
-
 input CommentInput {
   id: ID!
   content: String!
