@@ -1,5 +1,4 @@
 import { User } from "../../model/userModel.js";
-import { pubsub } from "../../server/pubsub.js";
 import { generateToken } from "../../utils/auth.js";
 
 
@@ -11,10 +10,8 @@ export const chatMutationResolvers = {
     }
     const newUser = new User({ name, email, password, role,  isOnline: false });
     await newUser.save();
-
     return newUser;
   },
-
   login: async (_, { email, password }) => {
     const user = await User.findOne({ email, password });
     if (!user) throw new Error("Invalid credentials");
@@ -23,10 +20,10 @@ export const chatMutationResolvers = {
     await user.save();
     return { user, token };
   },
-  deleteUser: async (_, { id ,ID2}) => {
-    const user = await User.findById(id);
-    if (!user) throw new Error("User not found");
-    
+ deleteUser: async (_, { id }, { userExist }) => {
+  if (!userExist || userExist.role !== "ADMIN") {
+    throw new Error("Only admin can delete users");
+  }
     const adminUSer = await User.findById(ID2);
     if (!adminUSer || adminUSer.role !== "ADMIN") {
       throw new Error("Only admin can delete users");
@@ -36,25 +33,6 @@ export const chatMutationResolvers = {
   },
  
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // import { allChat } from "../../config/serverConfig.js";
