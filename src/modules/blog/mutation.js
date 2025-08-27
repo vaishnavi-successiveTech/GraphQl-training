@@ -1,3 +1,4 @@
+import { pubsub } from '../../server/pubsub.js';
 import { comments, posts, users } from './dataSource.js';
 
 export const blogMutation = {
@@ -25,12 +26,15 @@ export const blogMutation = {
 
     const newComment = {
       id: String(comments.length + 1),
-       content,   // ✅ fixed to match schema
+      content,  
       userId: authorId,
       postId,
     };
 
     comments.push(newComment);
+    pubsub.publish("COMMENT_POSTED",{
+      commentPosted:newComment,
+    })
     return newComment;
   },
 

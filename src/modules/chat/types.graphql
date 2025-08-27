@@ -1,0 +1,18 @@
+type Chat {
+  id: ID!
+  text: String!
+  user: Sender!
+}
+
+type Sender {
+  id: ID!
+  username: String!
+}
+
+type UserPresence {
+  username: String!
+  status: String! # "ONLINE" | "OFFLINE"
+}
+
+
+
