@@ -17,16 +17,23 @@ type Query {
   getCommentsByPostId(postId: ID!): [Comment!]!
   getUserByComment(comment: CommentInput!): User
   getAuthorOfPost(post: PostInput!): User
+   getUser(id: ID!): UserResult
+  getPost(id: ID!): PostResult
+  getComment(id: ID!): CommentResult
+   paginatedPosts(page: Int!, limit: Int!,sortBy:String,order:String): PaginatedPosts
 }
 
 type Mutation {
     postMessage(content: String!, author: String!, title: String!): Message!
     createPost(title: String!, content: String!, authorId: ID!): Post!
+    createComment(content: String!, authorId: ID!, postId: ID!): Comment!
+    updateUser(id:ID!,name:String!):User
+    deleteComment(id:ID!):Comment
 }
 
 input CommentInput {
   id: ID!
-  text: String!
+  content: String!
   postId: ID!
   userId: ID!
 }
@@ -37,4 +44,5 @@ input PostInput {
   content: String!
   authorId: ID!
 }
+
 
