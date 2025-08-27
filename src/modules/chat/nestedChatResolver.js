@@ -1,6 +1,5 @@
-import { senders } from "./dataSource.js"
-
-export const nestedChatResolvers={
-
-    //
-}
+// export const nestedChatResolvers = {
+//   Sender: {
+//     id: (parent) => parent._id ? parent._id.toString() : parent.id, // handles both Mongo _id and mock id
+//   },
+// };

@@ -2,7 +2,7 @@ import mongoose from "mongoose"
 
 export const connectDB=async()=>{
     try{
-        await mongoose.connect("mongodb://localhost:27017/")
+        await mongoose.connect("mongodb://localhost:27017/ChatApp")
         console.log("MongoDB connected");
   } catch (err) {
     console.error(err.message);

@@ -5,7 +5,7 @@ import { createApolloServer } from "./src/server/express.js";
 import { connectDB } from "./src/config/db.js";
 
 const httpServer = await createApolloServer(8001);
-// connectDB();
+connectDB();
 httpServer.listen(8001, () => {
   console.log(`🚀 Query/Mutation endpoint: http://localhost:8001/graphql`);
   console.log(`🚀 Subscription endpoint: ws://localhost:8001/graphql`);

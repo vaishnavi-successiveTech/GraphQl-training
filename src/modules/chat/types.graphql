@@ -4,15 +4,25 @@ type Chat {
   user: Sender!
 }
 
-type Sender {
-  id: ID!
-  username: String!
-}
+# type Sender {
+#   id: ID!
+#   username: String!
+# }
 
 type UserPresence {
   username: String!
   status: String! # "ONLINE" | "OFFLINE"
 }
+
+type Sender {
+  id: ID!
+  name: String!
+  email: String!
+  password: String!
+  role: String!
+  isOnline: Boolean!
+}
+
 
 
 

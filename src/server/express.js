@@ -49,8 +49,8 @@ export async function createExpressServer() {
         return {user:null,pubsub};
       }
       console.log('my token is',token)
-      const userExist = jwt.verify(token,"supersecret")
-      console.log("userExist",userExist)
+      const userExist = jwt.verify(token,"MY_SECRET_KEY");
+      console.log("userExist role",userExist);
       return { pubsub,userExist };
     },
   
